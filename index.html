@@ -142,13 +142,10 @@ body{
 
     <div class="meaning" id="meaning"></div>
 
-    <!-- ① クメール語に修正 -->
     <button class="answer-btn" onclick="showAnswer()">ចម្លើយ</button>
 
-    <!-- ③ 間隔 -->
     <div class="answer-space"></div>
 
-    <!-- ② 太字なし -->
     <div class="question">ចាំបានហើយឬនៅ?</div>
 
     <div class="choice">
@@ -159,14 +156,12 @@ body{
   </div>
 </div>
 
-<!-- END -->
 <div id="end" class="screen">
   <div class="end">おわり！</div>
+  <div class="end" id="resultText"></div> 
 
-  <!-- ⑦ ピンク -->
   <button class="normal-btn retry-btn" onclick="retryMissed()">ពាក្យដែលមិនទាន់</button>
 
-  <!-- ⑥ オレンジ -->
   <button class="normal-btn home-btn" onclick="goHome()">ទំព័រដើម</button>
 </div>
 
@@ -192,6 +187,7 @@ function start(n){
   words = shuffle(vocabulary[n] || []);
   index = 0;
   missedWords = [];
+  correctCount = 0;
   show("quiz");
   render();
 }
@@ -207,13 +203,17 @@ function showAnswer(){
 }
 
 function answer(isKnown){
-  if(!isKnown){
-    missedWords.push(words[index]);
+
+  if(isKnown){
+    correctCount++;   // 覚えた＝正解
+  }else{
+    missedWords.push(words[index]); // まだ＝間違い
   }
 
   index++;
 
   if(index >= words.length){
+    showResult();
     show("end");
     return;
   }
@@ -223,13 +223,15 @@ function answer(isKnown){
 
 function retryMissed(){
   if(missedWords.length === 0){
-    alert("全て覚えています");
+    alert("អ្នកបានចងចាំទាំងអស់ហើយ");
+    correctCount = 0;
     return;
   }
 
   words = shuffle([...missedWords]);
   missedWords = [];
   index = 0;
+  correctCount = 0;  
 
   show("quiz");
   render();
@@ -240,6 +242,13 @@ function show(id){
   document.getElementById("quiz").classList.remove("active");
   document.getElementById("end").classList.remove("active");
   document.getElementById(id).classList.add("active");
+}
+
+let correctCount = 0;
+
+function showResult(){
+  document.getElementById("resultText").textContent =
+    correctCount + "/" + words.length + " ចងចាំបាន";
 }
 
 function goHome(){
@@ -257,7 +266,6 @@ function shuffle(arr){
 
 </script>
 
-<!-- コピーライト（そのまま維持） -->
 <div style="position:fixed;bottom:5px;width:100%;text-align:center;font-size:48px;">
 Copyright © C-PRO Co,. Ltd
 </div>
