@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>みんなの日本語　ことば</title>
+
+<style>
+body{
+  margin:0;
+  padding:0;
+  font-family:"Yu Gothic","Meiryo",sans-serif;
+  text-align:center;
+  background:#fff;
+}
+
+.logo{
+  display:block;
+  margin:10px auto;
+  max-width:200px;
+  width:60%;
+  height:auto;
+}
+
+/* 画面 */
+.screen{display:none;}
+.active{display:block;}
+
+.container{
+  width:100%;
+  padding:10px;
+  box-sizing:border-box;
+}
+
+.title{font-size:48px;margin:20px 0;}
+
+.lesson-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:18px;
+}
+
+.lesson-btn{
+  font-size:48px;
+  padding:24px 0;
+  border:none;
+  border-radius:10px;
+  background:#d6ecff;
+  cursor:pointer;
+}
+
+/* 問題 */
+.khmer{
+  font-size:clamp(42px,10vw,70px);
+  margin-top:80px;
+}
+
+.meaning{
+  font-size:clamp(28px,7vw,50px);
+  margin-top:30px;
+  color:#444;
+  min-height:60px;
+}
+
+/* 質問テキスト（② 太字解除） */
+.question{
+  font-size:clamp(34px,6vw,60px);
+  margin-top:30px;
+  font-weight:normal; /* ←修正 */
+}
+
+/* ボタン */
+.choice{
+  margin-top:30px;
+}
+
+.choice button{
+  font-size:40px;
+  padding:18px 50px;
+  margin:10px;
+  border:none;
+  border-radius:16px;
+  cursor:pointer;
+}
+
+/* ⑤ 課番号と同じ薄青 */
+.btn-ok{background:#bff3c2;}
+.btn-ng{background:#ffc0cb;}
+
+.answer-btn{
+  font-size:36px;
+  padding:14px 40px;
+  margin-top:20px;
+  border:none;
+  border-radius:12px;
+
+  /* ⑤ 薄青 */
+  background:#d6ecff;
+
+  cursor:pointer;
+}
+
+/* ③ スペース追加用 */
+.answer-space{
+  height:20px;
+}
+
+/* 終了画面 */
+.end{
+  font-size:42px;
+  margin-top:120px;
+}
+
+.normal-btn{
+  font-size:40px;
+  padding:18px 50px;
+  border:none;
+  border-radius:16px;
+  margin:10px;
+  cursor:pointer;
+}
+
+/* ⑥ ホーム（オレンジ） */
+.home-btn{
+  background:#ff9900;
+  color:#fff;
+}
+
+/* ⑦ もう一度（薄ピンク） */
+.retry-btn{
+  background:#ffc0cb;
+}
+</style>
+</head>
+
+<body>
+
+<img src="logo.png" class="logo">
+
+<!-- HOME -->
+<div id="home" class="screen active">
+  <div class="container">
+    <div class="title">みんなの日本語　ことば</div>
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen">
+  <div class="container">
+
+    <div class="khmer" id="khmer"></div>
+
+    <div class="meaning" id="meaning"></div>
+
+    <!-- ① クメール語に修正 -->
+    <button class="answer-btn" onclick="showAnswer()">ចម្លើយ</button>
+
+    <!-- ③ 間隔 -->
+    <div class="answer-space"></div>
+
+    <!-- ② 太字なし -->
+    <div class="question">ចាំបានហើយឬនៅ?</div>
+
+    <div class="choice">
+      <button class="btn-ok" onclick="answer(true)">បានហើយ</button>
+      <button class="btn-ng" onclick="answer(false)">មិនទាន់</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- END -->
+<div id="end" class="screen">
+  <div class="end">おわり！</div>
+
+  <!-- ⑦ ピンク -->
+  <button class="normal-btn retry-btn" onclick="retryMissed()">ពាក្យដែលមិនទាន់</button>
+
+  <!-- ⑥ オレンジ -->
+  <button class="normal-btn home-btn" onclick="goHome()">ទំព័រដើម</button>
+</div>
+
+<script src="vocabulary.js"></script>
+
+<script>
+
+let words = [];
+let index = 0;
+let missedWords = [];
+
+/* HOME */
+const grid = document.getElementById("lessonGrid");
+
+for(let i=1;i<=25;i++){
+  const btn = document.createElement("button");
+  btn.className = "lesson-btn";
+  btn.textContent = i;
+  btn.onclick = () => start(i);
+  grid.appendChild(btn);
+}
+
+/* START */
+function start(n){
+  words = shuffle(vocabulary[n] || []);
+  index = 0;
+  missedWords = [];
+  show("quiz");
+  render();
+}
+
+/* 表示 */
+function render(){
+  document.getElementById("khmer").textContent = words[index].k;
+  document.getElementById("meaning").textContent = "";
+}
+
+/* 答え */
+function showAnswer(){
+  document.getElementById("meaning").textContent =
+    words[index].j;
+}
+
+/* 回答 */
+function answer(isKnown){
+  if(!isKnown){
+    missedWords.push(words[index]);
+  }
+
+  index++;
+
+  if(index >= words.length){
+    show("end");
+    return;
+  }
+
+  render();
+}
+
+/* 再テスト */
+function retryMissed(){
+  if(missedWords.length === 0){
+    alert("全て覚えています");
+    return;
+  }
+
+  words = shuffle([...missedWords]);
+  missedWords = [];
+  index = 0;
+
+  show("quiz");
+  render();
+}
+
+/* 画面 */
+function show(id){
+  document.getElementById("home").classList.remove("active");
+  document.getElementById("quiz").classList.remove("active");
+  document.getElementById("end").classList.remove("active");
+  document.getElementById(id).classList.add("active");
+}
+
+function goHome(){
+  show("home");
+}
+
+/* shuffle */
+function shuffle(arr){
+  let a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    let j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+</script>
+
+<!-- コピーライト（そのまま維持） -->
+<div style="position:fixed;bottom:5px;width:100%;text-align:center;font-size:12px;">
+Copyright © C-PRO Co,. Ltd
+</div>
+
+</body>
+</html>
