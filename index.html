@@ -60,7 +60,7 @@ html, body{
 }
 
 .khmer{
-  font-size:clamp(42px,10vw,70px);
+  font-size:clamp(70px,14vw,100px);
   margin-top:80px;
 }
 
@@ -113,8 +113,10 @@ html, body{
   font-size:42px;
   margin-top:120px;
 }
-#end{
-  padding-bottom:120px;
+#end button{
+  display:block;
+  margin:10px auto;
+}
 }
 #end .container{
   padding-bottom:120px;
@@ -205,15 +207,15 @@ html, body{
       នេះគឺជាឧបករណ៍សម្រាប់រំលឹកពាក្យដែលបានរៀន។<br>
       សូមចុចប៊ូតុងមេរៀនដែលអ្នកចង់រៀន ដើម្បីចាប់ផ្តើម។<br>
       សូមឆ្លើយន័យរបស់ពាក្យខ្មែរដែលបង្ហាញ។<br>
-      ចុចប៊ូតុង 「ចម្លើយ」 ដើម្បីមើលន័យជាភាសាជប៉ុន។<br>
-      ប្រសិនបើអ្នកចងចាំពាក្យបានល្អហើយ សូមចុច 「បានហើយ」។<br>
-      ប្រសិនបើអ្នកមិនទាន់ចងចាំបានល្អ សូមចុច 「មិនទាន់」។<br>
+      ចុចប៊ូតុង "ចម្លើយ" ដើម្បីមើលន័យជាភាសាជប៉ុន។<br>
+      ប្រសិនបើអ្នកចងចាំពាក្យបានល្អហើយ សូមចុច "បានហើយ"។<br>
+      ប្រសិនបើអ្នកមិនទាន់ចងចាំបានល្អ សូមចុច "មិនទាន់"។<br>
       បន្ទាប់ពីធ្វើចប់ទាំងអស់ អ្នកអាចសាកល្បងពាក្យដែលមិនទាន់ចងចាំម្តងទៀតបាន។<br><br>
 
       <strong>*សូមប្រុងប្រយ័ត្ន*</strong><br>
       សូមគោរពតាមច្បាប់ខាងក្រោម៖<br>
       1. អាចប្រើក្នុងថ្នាក់បាន ចាប់ពី 10 នាទីមុនម៉ោងចាប់ផ្តើមរៀន រហូតដល់ម៉ោងចាប់ផ្តើមរៀន។<br>
-      2. អាចប្រើបានបន្ទាប់ពីបញ្ចប់ការសិក្សាប្រចាំថ្ងៃ។<br>
+      2. អាចប្រើបានគ្រប់ទីកន្លែង បន្ទាប់ពីបញ្ចប់ការសិក្សាប្រចាំថ្ងៃ។<br>
 
       <div class="close-notice" onclick="toggleNotice(false)">
         បិទ
@@ -251,7 +253,7 @@ html, body{
   <div class="end">おわり！</div>
   <div class="end" id="resultText"></div> 
 
-  <button class="normal-btn retry-btn" onclick="retryMissed()">ពាក្យដែលមិនទាន់</button>
+  <button class="normal-btn retry-btn" onclick="retryMissed()">ពាក្យមិនទាន់ចងចាំ</button>
 
   <button class="normal-btn home-btn" onclick="goHome()">ទំព័រដើម</button>
 </div>
@@ -343,6 +345,7 @@ function showResult(){
 }
 
 function goHome(){
+  toggleNotice(false);
   show("home");
 }
 
