@@ -119,6 +119,39 @@ body{
 .retry-btn{
   background:#ffc0cb;
 }
+
+.notice-link{
+  font-size:28px !important;
+  color:#0066cc;
+  text-decoration:underline;
+  cursor:pointer;
+  margin-top:10px;
+  margin-bottom:60px !important;
+  display:block;
+}
+
+.notice-box{
+  display:none;
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+  border:2px solid #ccc;
+  border-radius:12px;
+  background:#f8f8f8;
+  text-align:left;
+  font-size:24px;
+  line-height:1.8;
+}
+
+.close-notice{
+  text-align:center;
+  color:#0066cc;
+  text-decoration:underline;
+  cursor:pointer;
+  margin-top:20px;
+  font-size:28px;
+}
+
 </style>
 </head>
 
@@ -129,8 +162,36 @@ body{
 <!-- HOME -->
 <div id="home" class="screen active">
   <div class="container">
+
     <div class="title">みんなの日本語　ことば</div>
+
+    <div class="notice-link" onclick="toggleNotice(true)">
+      សូមអានជាមុន
+    </div>
+
+    <div id="noticeBox" class="notice-box">
+
+      នេះគឺជាឧបករណ៍សម្រាប់រំលឹកពាក្យដែលបានរៀន។<br>
+      សូមចុចប៊ូតុងមេរៀនដែលអ្នកចង់រៀន ដើម្បីចាប់ផ្តើម។<br>
+      សូមឆ្លើយន័យរបស់ពាក្យខ្មែរដែលបង្ហាញ។<br>
+      ចុចប៊ូតុង 「ចម្លើយ」 ដើម្បីមើលន័យជាភាសាជប៉ុន។<br>
+      ប្រសិនបើអ្នកចងចាំពាក្យបានល្អហើយ សូមចុច 「បានហើយ」។<br>
+      ប្រសិនបើអ្នកមិនទាន់ចងចាំបានល្អ សូមចុច 「មិនទាន់」។<br>
+      បន្ទាប់ពីធ្វើចប់ទាំងអស់ អ្នកអាចសាកល្បងពាក្យដែលមិនទាន់ចងចាំម្តងទៀតបាន។<br><br>
+
+      <strong>*សូមប្រុងប្រយ័ត្ន*</strong><br>
+      សូមគោរពតាមច្បាប់ខាងក្រោម៖<br>
+      1. អាចប្រើក្នុងថ្នាក់បាន ចាប់ពី 10 នាទីមុនម៉ោងចាប់ផ្តើមរៀន រហូតដល់ម៉ោងចាប់ផ្តើមរៀន។<br>
+      2. អាចប្រើបានបន្ទាប់ពីបញ្ចប់ការសិក្សាប្រចាំថ្ងៃ។<br>
+
+      <div class="close-notice" onclick="toggleNotice(false)">
+        បិទ
+      </div>
+
+    </div>
+
     <div class="lesson-grid" id="lessonGrid"></div>
+
   </div>
 </div>
 
@@ -205,9 +266,9 @@ function showAnswer(){
 function answer(isKnown){
 
   if(isKnown){
-    correctCount++;   // 覚えた＝正解
+    correctCount++; 
   }else{
-    missedWords.push(words[index]); // まだ＝間違い
+    missedWords.push(words[index]); 
   }
 
   index++;
@@ -262,6 +323,11 @@ function shuffle(arr){
     [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
+}
+
+function toggleNotice(showFlag){
+  document.getElementById("noticeBox").style.display =
+    showFlag ? "block" : "none";
 }
 
 </script>
