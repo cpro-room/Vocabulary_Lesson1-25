@@ -121,7 +121,7 @@ body{
 }
 
 .notice-link{
-  font-size:28px !important;
+  font-size:36px !important;
   color:#0066cc;
   text-decoration:underline;
   cursor:pointer;
@@ -139,7 +139,7 @@ body{
   border-radius:12px;
   background:#f8f8f8;
   text-align:left;
-  font-size:24px;
+  font-size:36;
   line-height:1.8;
 }
 
@@ -149,7 +149,23 @@ body{
   text-decoration:underline;
   cursor:pointer;
   margin-top:20px;
-  font-size:28px;
+  font-size:36px;
+}
+
+.copyright{
+  position:fixed;
+  bottom:5px;
+  left:0;
+  width:100%;
+  text-align:center;
+
+  font-size:24px; /* ←固定サイズ（必要なら調整） */
+  background:#fff;
+
+  padding:5px 0;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 </style>
@@ -159,7 +175,6 @@ body{
 
 <img src="logo.png" class="logo">
 
-<!-- HOME -->
 <div id="home" class="screen active">
   <div class="container">
 
@@ -195,7 +210,6 @@ body{
   </div>
 </div>
 
-<!-- QUIZ -->
 <div id="quiz" class="screen">
   <div class="container">
 
@@ -332,7 +346,7 @@ function toggleNotice(showFlag){
 
 </script>
 
-<div style="position:fixed;bottom:5px;width:100%;text-align:center;font-size:48px;">
+<div class="copyright">
 Copyright © C-PRO Co,. Ltd
 </div>
 
