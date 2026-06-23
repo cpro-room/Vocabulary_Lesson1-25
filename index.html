@@ -1,390 +1,259 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>ことば の れんしゅう</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>N5 ちょうかい れんしゅう①</title>
 
 <style>
-body{
-  margin:0;
-  padding:0;
-  font-family:"Yu Gothic","Meiryo",sans-serif;
-  text-align:center;
-  background:#fff;
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 16px;
+    font-family: sans-serif;
+    background: #f7f7f7;
+    color: #222;
+    text-align: center;
+  }
+
+  h1 { font-size: 1.8rem; margin-bottom: 20px; }
+
+  #quizArea { max-width: 500px; margin: 0 auto; }
+
+  #questionNumber {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: #555;
+  }
+
+#questionBox {
+  font-size: 1.3rem;
+  line-height: 1.4;
+  background: white;
+  padding: 16px 16px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  height: 80px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  padding-left: 1em; 
 }
 
-html, body{
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  #optionsBox {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option {
+    width: 100%;
+    padding: 12px 12px;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    cursor: pointer;
+    text-align: left;
+    padding-left: 1em; 
+  }
+
+  .correct { font-size: 3rem; color: red; font-weight: bold; }
+  .wrong { font-size: 3rem; color: blue; font-weight: bold; }
+
+#judge {
+  margin-top: 0;
+  margin-bottom: 2px;
 }
 
-.logo{
-  display:block;
-  margin:40px auto 10px auto !important;
-  max-width:200px;
-  width:60%;
-  height:auto;
+#nextBtn {
+  display: block;
+  margin: 6px auto 0;
+  padding: 10px 18px;
+  width: auto;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
+  background: #00c851;
+  color: white;
+  cursor: pointer;
 }
 
-.screen{display:none;}
-.active{display:block;}
+  #result {
+    margin-top: 30px;
+    text-align: left;
+    background: white;
+    padding: 16px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
 
-.container{
-  width:100%;
-  padding:10px;
-  box-sizing:border-box;
-}
-#quiz .container{
-  padding-bottom:120px;
-}
-
-.title{font-size:48px;margin:20px 0;}
-
-.lesson-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:18px;
+ #questionBox.finalMode {
+  display: block;
+  height: auto;
+  padding: 20px 10px;
+  text-align: center;
 }
 
-.lesson-btn{
-  font-size:48px;
-  padding:32px 0;
-  border:none;
-  border-radius:10px;
-  background:#d6ecff;
-  cursor:pointer;
+.finalTitle,
+.finalScore {
+  text-align: center;
+  line-height: 1.2;
 }
-
-#home .container{
-  padding-bottom:120px;
+.finalScore {
+  margin-top: 4px; /* ここで2行の間隔調整 */
 }
-
-.khmer{
-  font-size:clamp(70px,14vw,100px);
-  margin-top:80px;
-}
-
-.meaning{
-  font-size:clamp(28px,7vw,50px);
-  margin-top:30px;
-  color:#444;
-  height:80px;
-}
-
-.question{
-  font-size:clamp(20px,4vw,40px);
-  margin-top:30px;
-  font-weight:normal; 
-}
-
-.choice{
-  margin-top:30px;
-}
-
-.choice button{
-  font-size:50px;
-  padding:25px 70px;
-  margin:10px;
-  border:none;
-  border-radius:16px;
-  cursor:pointer;
-}
-
-.btn-ok{background:#bff3c2;}
-.btn-ng{background:#ffc0cb;}
-
-.answer-btn{
-  font-size:50px;
-  padding:25px 70px;
-  margin-top:20px;
-  border:none;
-  border-radius:12px;
-
-  background:#d6ecff;
-
-  cursor:pointer;
-}
-
-.answer-space{
-  height:100px;
-}
-
-.end{
-  font-size:42px;
-  margin-top:120px;
-}
-#end{
-  padding-bottom:180px;
-}
-#end button{
-  display:block;
-  margin:10px auto;
-}
-
-#end .container{
-  padding-bottom:120px;
-}
-#end .normal-btn{
-  margin-bottom:40px;
-}
-
-.normal-btn{
-  font-size:40px;
-  padding:25px 70px;
-  border:none;
-  border-radius:16px;
-  margin:10px;
-  cursor:pointer;
-}
-
-.home-btn{
-  background:#ff9900;
-  color:#fff;
-}
-
-.retry-btn{
-  background:#ffc0cb;
-}
-
-.notice-link{
-  font-size:36px !important;
-  color:#0066cc;
-  text-decoration:underline;
-  cursor:pointer;
-  margin-top:10px;
-  margin-bottom:60px !important;
-  display:inline-block;
-  margin:10px 0 40px 0;
-}
-
-.notice-box{
-  display:none;
-  max-width:900px;
-  margin:20px auto;
-  padding:30px 25px;
-
-  border:2px solid #ccc;
-  border-radius:12px;
-  background:#f8f8f8;
-  text-align:left;
-  font-size:36px;
-  line-height:2.0; 
-  letter-spacing:0.5px; 
-}
-
-.close-notice{
-  display:block;
-  margin-top:20px;
-  font-size:36px;
-  color:#0066cc;
-  text-decoration:underline;
-  cursor:pointer;
-  text-align:center; 
-}
-
-.copyright{
-  width:100%;
-  text-align:center;
-
-  font-size:24px !important;
-  background:#fff;
-
-  padding:10px 0;
-}
-
 </style>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DDD1Y5SELD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DDD1Y5SELD');
-</script>
-
 </head>
 
 <body>
 
-<img src="logo.png" class="logo">
+<h1>N5 ちょうかい れんしゅう①</h1>
 
-<div id="home" class="screen active">
-  <div class="container">
+<div id="quizArea">
+  <div id="questionNumber"></div>
 
-    <div class="title">ことば の れんしゅう</div>
-
-    <div class="notice-link" onclick="toggleNotice(true)">
-      សូមអានជាមុន
-    </div>
-
-    <div id="noticeBox" class="notice-box">
-
-      នេះគឺជាឧបករណ៍សម្រាប់រំលឹកពាក្យដែលបានរៀន។<br>
-      សូមចុចប៊ូតុងមេរៀនដែលអ្នកចង់រៀន ដើម្បីចាប់ផ្តើម។<br>
-      សូមឆ្លើយន័យរបស់ពាក្យខ្មែរដែលបង្ហាញ។<br>
-      ចុចប៊ូតុង "ចម្លើយ" ដើម្បីមើលន័យជាភាសាជប៉ុន។<br>
-      ប្រសិនបើអ្នកចងចាំពាក្យបានល្អហើយ សូមចុច "បានចងចាំហើយ"។<br>
-      ប្រសិនបើអ្នកមិនទាន់ចងចាំបានល្អ សូមចុច "មិនទាន់ទេ"។<br>
-      បន្ទាប់ពីធ្វើចប់ទាំងអស់ អ្នកអាចសាកល្បងពាក្យដែលមិនទាន់ចងចាំម្តងទៀតបាន។<br><br>
-
-      <strong>*ចំណាំ*</strong><br>
-      ឧបករណ៍នេះត្រូវបានបង្កើតឡើងសម្រាប់ការសិក្សានៅក្នុងសាលា។ ដូច្នេះហើយ ការចម្លង ឬចែករំលែកដោយគ្មានការអនុញ្ញាតត្រូវបានហាមឃាត់។<br>
-      ចាប់ពីម៉ោង 7:40 ព្រឹក ដល់ម៉ោង 12:00 ថ្ងៃត្រង់ និងពីម៉ោង 1:00 រសៀល ដល់ម៉ោង 5:00 ល្ងាច ប្រសិនបើត្រូវប្រើប្រាស់ សូមទទួលបានការអនុញ្ញាតពីគ្រូជាមុន។<br>
-      ក្នុងរយៈពេលខាងលើ ប្រសិនបើប្រើប្រាស់ដោយគ្មានការអនុញ្ញាតពីគ្រូ ឬមើលគេហទំព័រផ្សេងៗតាមទូរស័ព្ទដៃ នឹងត្រូវដាក់ពិន័យ។<br>
-
-      <div class="close-notice" onclick="toggleNotice(false)">
-        បិទ
-      </div>
-
-    </div>
-
-    <div class="lesson-grid" id="lessonGrid"></div>
-
+  <div id="speakerArea" style="margin-bottom:10px;">
+    <button onclick="playAudio()" style="font-size:2.5rem;">🔊</button>
   </div>
+
+  <div id="questionBox"></div>
+
+  <div id="optionsBox"></div>
+
+  <div id="judge"></div>
+
+  <button id="nextBtn" onclick="nextQuestion()">つぎへ</button>
+
+  <div id="result"></div>
 </div>
 
-<div id="quiz" class="screen">
-  <div class="container">
-
-    <div class="khmer" id="khmer"></div>
-
-    <div class="meaning" id="meaning"></div>
-
-    <button class="answer-btn" onclick="showAnswer()">ចម្លើយ</button>
-
-    <div class="answer-space"></div>
-
-    <div class="question">បានចងចាំនៅ?</div>
-
-    <div class="choice">
-      <button class="btn-ok" onclick="answer(true)">បានចងចាំហើយ </button>
-      <button class="btn-ng" onclick="answer(false)">មិនទាន់ទេ</button>
-    </div>
-
-  </div>
-</div>
-
-<div id="end" class="screen">
-  <div class="end">おわり！</div>
-  <div class="end" id="resultText"></div> 
-
-  <button class="normal-btn retry-btn" onclick="retryMissed()">ពាក្យដែលមិនទាន់ចងចាំ</button>
-
-  <button class="normal-btn home-btn" onclick="goHome()">ទំព័រដើម</button>
-</div>
-
-<script src="vocabulary.js"></script>
+<script src="questions.js"></script>
 
 <script>
 
-let words = [];
-let index = 0;
-let missedWords = [];
-
-const grid = document.getElementById("lessonGrid");
-
-for(let i=1;i<=25;i++){
-  const btn = document.createElement("button");
-  btn.className = "lesson-btn";
-  btn.textContent = i;
-  btn.onclick = () => start(i);
-  grid.appendChild(btn);
-}
-
-function start(n){
-  words = shuffle(vocabulary[n] || []);
-  index = 0;
-  missedWords = [];
-  correctCount = 0;
-  show("quiz");
-  render();
-}
-
-function render(){
-  document.getElementById("khmer").textContent = words[index].k;
-  document.getElementById("meaning").textContent = "";
-}
-
-function showAnswer(){
-  document.getElementById("meaning").textContent =
-    words[index].j;
-}
-
-function answer(isKnown){
-
-  if(isKnown){
-    correctCount++; 
-  }else{
-    missedWords.push(words[index]); 
-  }
-
-  index++;
-
-  if(index >= words.length){
-    showResult();
-    show("end");
-    return;
-  }
-
-  render();
-}
-
-function retryMissed(){
-  if(missedWords.length === 0){
-    alert("បានចងចាំទាំងអស់ហើយ");
-    correctCount = 0;
-    return;
-  }
-
-  words = shuffle([...missedWords]);
-  missedWords = [];
-  index = 0;
-  correctCount = 0;  
-
-  show("quiz");
-  render();
-}
-
-function show(id){
-  document.getElementById("home").classList.remove("active");
-  document.getElementById("quiz").classList.remove("active");
-  document.getElementById("end").classList.remove("active");
-  document.getElementById(id).classList.add("active");
-}
-
+let quizList = [];
+let current = 0;
+let answering = false;
+let currentAudio = "";
 let correctCount = 0;
 
-function showResult(){
-  document.getElementById("resultText").textContent =
-    correctCount + "/" + words.length + " ចងចាំបាន";
+startQuiz(questions);
+
+function startQuiz(list) {
+  quizList = shuffle([...list]);
+  current = 0;
+  correctCount = 0;
+  showQuestion();
+  document.getElementById("speakerArea").style.display = "block";
 }
 
-function goHome(){
-  toggleNotice(false);
-  show("home");
-}
+function showQuestion() {
+  if (current >= quizList.length) {
 
-function shuffle(arr){
-  let a = [...arr];
-  for(let i=a.length-1;i>0;i--){
-    let j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
+    document.getElementById("speakerArea").style.display = "none";
+    document.getElementById("questionNumber").textContent = "";
+
+    const box = document.getElementById("questionBox");
+
+    // ★通常レイアウト解除
+    box.classList.add("finalMode");
+
+    box.innerHTML =
+      `<div class="finalTitle">おわり！</div>
+       <div class="finalScore">${correctCount}/${quizList.length} てん</div>`;
+
+    document.getElementById("optionsBox").innerHTML = "";
+    document.getElementById("judge").innerHTML = "";
+    document.getElementById("nextBtn").style.display = "none";
+
+    currentAudio = "";
+    return;
   }
-  return a;
+
+  const q = quizList[current];
+
+  document.getElementById("questionNumber").textContent =
+    `もんだい ${current + 1} / ${quizList.length}`;
+
+  const box = document.getElementById("questionBox");
+  box.classList.remove("finalMode"); // ★通常に戻す
+
+  box.textContent = "";
+  document.getElementById("judge").innerHTML = "";
+  document.getElementById("nextBtn").style.display = "none";
+
+  currentAudio = `audio/${q.no}.mp3`;
+
+  const optBox = document.getElementById("optionsBox");
+  optBox.innerHTML = "";
+
+  shuffle([...q.options]).forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(opt);
+    optBox.appendChild(btn);
+  });
 }
 
-function toggleNotice(showFlag){
-  document.getElementById("noticeBox").style.display =
-    showFlag ? "block" : "none";
+let audioPlayer = null;
+
+function playAudio() {
+  if (!currentAudio) return;
+
+  if(audioPlayer){
+    audioPlayer.pause();
+  }
+
+  audioPlayer = new Audio(currentAudio);
+  audioPlayer.play();
+}
+
+function checkAnswer(choice) {
+  if (answering) return;
+  answering = true;
+
+  const buttons = document.querySelectorAll(".option");
+
+  const q = quizList[current];
+  const correct = (choice === q.answer);
+
+  if (correct) {
+    correctCount++;
+  }
+
+  // ★全ボタンを無効化（ここが重要）
+  buttons.forEach(btn => {
+    btn.disabled = true;
+  });
+
+  document.getElementById("judge").innerHTML =
+    correct ? "<span class='correct'>○</span>" : "<span class='wrong'>×</span>";
+
+  document.getElementById("questionBox").innerHTML =
+    `<span style="color:blue">${q.script}</span>`;
+
+  document.getElementById("nextBtn").style.display = "block";
+
+  answering = false;
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+}
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
 }
 
 </script>
-
-<div class="copyright">
-© 2026 C-PRO Co., Ltd.
-</div>
 
 </body>
 </html>
